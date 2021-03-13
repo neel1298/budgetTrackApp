@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Form = ({
+    id,
     charge,
     amount,
     handleCharge,
@@ -12,6 +13,7 @@ const Form = ({
       <form onSubmit={handleSubmit}>
         <div className="form-center">
           <div className="form-group">
+            <input type="hidden" value={id} name='userid'></input>
             <label htmlFor="expense">charge</label>
             <input
               type="text"

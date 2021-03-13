@@ -2,12 +2,12 @@ import React from 'react'
 import Item from './ExpenseItem'
 import {FaTrash}  from "react-icons/fa";
 
-const ExpenseList = ({expenses,handleClearItems,handledelete}) => {
+const ExpenseList = ({expenses,handleClearItems,handledelete,handleedit}) => {
     
     return <>
     <ul className="list">
     {expenses.map((expense)=>{
-        return <Item key={expense.id}  expense={expense}  handledelete={handledelete} />
+        return <Item key={expense.id}  expense={expense}  handledelete={handledelete} handleedit={handleedit} />
 
     })}
     

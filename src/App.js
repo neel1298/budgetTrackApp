@@ -16,14 +16,25 @@ function App() {
   const [expenses,setExpenses] = useState([]);
   const [charge,setCharage] = useState("");
   const [amount,setamount] = useState("");
+  const [userid,SetUserId] = useState("");
   const handleSubmit = (e) =>{
     e.preventDefault();
+
     if(amount==="" || charge===""){
       alert("Please Enter a Value");
     }
     else{
+    if (userid === ""){  
     const singleExpense = {id:uuidv4(),charge,amount}
     setExpenses([...expenses,singleExpense]);
+    }
+    else{
+      let tempExpenses = expenses.map(item => {
+        return item.id === userid ? { ...item, charge, amount } : item;
+      });
+      setExpenses(tempExpenses);
+      SetUserId("");
+    }
     setCharage("");
     setamount("");
     } 
@@ -42,11 +53,21 @@ function App() {
     let removeitem = expenses.filter(item => item.id !== id)
     setExpenses(removeitem);
   }
+  const handleedit = (id) =>{
+    let item = expenses.find(item => item.id === id);
+    console.log(item);
+    let {charge,amount} = item;
+    setCharage(charge);
+    setamount(amount);
+    SetUserId(id);
+    
+  }
   return (
   <>
   <Alert></Alert>
   <main className="App">
   <Form 
+  id={userid}
   handleSubmit={handleSubmit}
   charge={charge}
   amount={amount}
@@ -56,7 +77,7 @@ function App() {
   
   <ExpenseList expenses={expenses} handleClearItems={handleClearItems}
   handledelete = {handledelete}
-  
+  handleedit = {handleedit}
   />
   </main>
   <h1>

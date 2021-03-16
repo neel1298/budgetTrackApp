@@ -16,6 +16,9 @@ connection.once('open',()=>{
    console.log("Mongose Connection Established")
 })
 
+const budgetRouter = require('./routes/budget');
+app.use("/budget",budgetRouter);
+
  app.listen(port,()=>{
     console.log(`Server is running on ${port}`);
  });

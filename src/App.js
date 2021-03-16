@@ -1,12 +1,11 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect, Component} from 'react';
 import './App.css';
 import Alert from './components/Alert';
 
 import ExpenseList from './components/ExpenseList';
 import Form from './components/Form';
 import {v4 as uuidv4} from 'uuid';
-
-
+import axios from 'axios';
 
 const intialExpense = [
   {id:uuidv4(),charge:"rent",amount:1400}
@@ -17,6 +16,19 @@ function App() {
   const [charge,setCharage] = useState("");
   const [amount,setamount] = useState("");
   const [userid,SetUserId] = useState("");
+
+  const getBudgetApi = () =>{
+    axios.get('http://localhost:5000/budget')
+      .then(res => {
+        const budget = res.data;
+        setExpenses(budget);
+      })
+  }
+
+  useEffect(() => {
+    getBudgetApi();
+  }, [])
+
   const handleSubmit = (e) =>{
     e.preventDefault();
 
@@ -26,6 +38,12 @@ function App() {
     else{
     if (userid === ""){  
     const singleExpense = {id:uuidv4(),charge,amount}
+    axios.post('http://localhost:5000/budget/add', singleExpense)
+            .then((res) => {
+                console.log(res.data)
+            }).catch((error) => {
+                console.log(error)
+            });
     setExpenses([...expenses,singleExpense]);
     }
     else{
